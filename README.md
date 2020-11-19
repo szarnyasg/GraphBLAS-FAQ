@@ -2,9 +2,11 @@
 
 ## Using GraphblAS
 
-### Why now?
+### This is textbook stuff, why isn't is used more widely?
 
-Until a SuiteSparse:GraphBLAS v3.2.0, there was no easy-to-use parallel CPU sparse matrix library.
+While the applicability of semirings and sparse matrices for formulating graph algorithms has been [well-known](https://www.goodreads.com/book/show/112266.The_Design_and_Analysis_of_Computer_Algorithms), it was not widely exploited.
+Naturally, the reasons behind this are manifold but I believe the key reason is that the linear algebraic formulation is shines best when the operations can be executed in parallel and there were no easy-to-use parallel libraries until very recently.
+While there were some librariers supporting parallel matrix operations (e.g. the Combinatorial BLAS), the first library that can be installed in minutes is SuiteSparse:GraphBLAS v3.2.0 which was released in late 2019.
 
 ### So is GraphBLAS ready for production use?
 
