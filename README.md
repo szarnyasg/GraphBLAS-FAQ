@@ -41,3 +41,7 @@ Want to keep the dimensions?
 
 1. base it on the edges
 2. use a label matrix
+
+## Handling properties
+
+TODO.
