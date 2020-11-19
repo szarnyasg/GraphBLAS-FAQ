@@ -1,6 +1,21 @@
-# GraphBLAS-FAQ
+# GraphBLAS FAQ
 
-## Loading graphs with non-contiguous vertex identifiers
+## Using GraphblAS
+
+### Why now?
+
+Until a SuiteSparse:GraphBLAS v3.2.0, there was no easy-to-use parallel CPU sparse matrix library.
+
+### So is GraphBLAS ready for production use?
+
+*My opinion* is the following:
+
+* SuiteSparse:GraphBLAS is a production-ready library. Other open-source libraries are experimental, not geared towards high performance, etc.
+* LAGraph is an experimental library and not ready for production use.
+
+## Design patterns
+
+### Loading graphs with non-contiguous vertex identifiers
 
 * **Question:** My vertices have non-contiguous identifiers. How do I turn my graph into matrices?
 
@@ -21,7 +36,7 @@
 
        * **Open problem:** SuiteSparse:GraphBLAS only supports matrices up to (2^60-1) × (2^60-1), making hypersparse matrices only suitable for graphs where the vertex ids are smaller than 2^60. What happens when the user has ids up to 2^64-1?
 
-## Projecting a subgraph for the same rows & columns
+### Projecting a subgraph for the same rows & columns
 
 Don't care about the dimensions of the matrices?
 
@@ -33,15 +48,15 @@ Want to keep the dimensions?
 2. Multiply with a selection matrix from the left and from the right (`S*A*S`)
 3. Use a dense vector to encode the vertices and `GxB_select` (see [discussion](https://github.com/GraphBLAS/LAGraph/issues/83))
 
-## Handling edge types
+### Handling edge types
 
 1. single matrix with values
 2. T boolean matrices
-## Handling node labels
+### Handling node labels
 
 1. base it on the edges
 2. use a label matrix
 
-## Handling properties
+### Handling properties
 
 TODO.
