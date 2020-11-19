@@ -1,6 +1,6 @@
 # GraphBLAS-FAQ
 
-## Identifiers
+## Loading graphs with non-contiguous vertex identifiers
 
 * **Question:** My vertices have non-contiguous identifiers. How do I turn my graph into matrices?
 
@@ -16,7 +16,28 @@
     2. **Hypersparse matrices.** Using SuiteSparse:GraphBLAS, it is possible to **leave the identifiers as-is**. The library will detect that it should build a [hypersparse matrix](https://people.eecs.berkeley.edu/~aydin/hypersparse-ipdps08.pdf). Hypersparse representations use a variant of the CSR/CSC compression techniques.
 
        * **Tradeoffs:**
-         - Loading will be faster at the cost of a small increase in processing times. If the processing time is not too high, the overall performance might even be better.
+         - Loading will be faster at the cost of a small increase in processing times. If the processing time is not too high compared to the loading time, the overall performance might even be better.
          - The code will be simpler as mapping between sparse-dense identifiers will no longer be necessary (during load or when mapping the results back to the original code).
 
-       * **Open problem:** SuiteSparse:GraphBLAS only supports matrices up to (2^60-1) × (2^60-1), making hypersparse matrices only suitable for graphs where the vertex ids as smaller than 2^60. What happens when the user has ids up to 2^64-1?
+       * **Open problem:** SuiteSparse:GraphBLAS only supports matrices up to (2^60-1) × (2^60-1), making hypersparse matrices only suitable for graphs where the vertex ids are smaller than 2^60. What happens when the user has ids up to 2^64-1?
+
+## Projecting a subgraph for the same rows & columns
+
+Don't care about the dimensions of the matrices?
+
+1. Use `GrB_extract` to get the small matrix. For subsequent operations (e.g. `GrB_mxm`), also use extract along the corresponding dimension(s).
+
+Want to keep the dimensions?
+
+1. `GrB_extract` to a smaller matrix + use GrB_assign to restore the dimensions of the original matrix
+2. Multiply with a selection matrix from the left and from the right (`S*A*S`)
+3. Use a dense vector to encode the vertices and `GxB_select` (see [discussion](https://github.com/GraphBLAS/LAGraph/issues/83))
+
+## Handling edge types
+
+1. single matrix with values
+2. T boolean matrices
+## Handling node labels
+
+1. base it on the edges
+2. use a label matrix
