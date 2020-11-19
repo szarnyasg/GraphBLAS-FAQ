@@ -1,6 +1,6 @@
 # GraphBLAS FAQ
 
-## Using GraphblAS
+## Using GraphBLAS
 
 ### This is textbook stuff, why isn't is used more widely?
 
